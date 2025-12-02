@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PEC GeoSystems | Geospatial & Geological Intelligence</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #003B73;
+            --earth-slate: #2E3A45;
+            --signal-green: #1BAE77;
+            --sandstone: #C9A97A;
+            --tech-gray: #D9DFE5;
+            --dark-text: #1a1a1a;
+            --light-bg: #f8f9fa;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--dark-text);
+            background: linear-gradient(135deg, #f8f9fa 0%, #f0f3f7 100%);
+            overflow-x: hidden;
+        }
+
+        /* ========== HEADER & NAV ========== */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.92);
+            border-bottom: 1px solid rgba(0, 59, 115, 0.1);
+            padding: 1.2rem 2rem;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+            letter-spacing: -1px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo::before {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: linear-gradient(135deg, var(--signal-green), var(--primary-blue));
+            border-radius: 2px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        nav {
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--dark-text);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--signal-green);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .cta-button {
+            background: var(--signal-green);
+            color: white !important;
+            padding: 0.8rem 1.6rem;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .cta-button:hover {
+            background: #168a61;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(27, 174, 119, 0.3);
+        }
+
+        /* ========== HERO SECTION ========== */
+        .hero {
+            margin-top: 80px;
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            right: -200px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(27, 174, 119, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            left: -150px;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(0, 59, 115, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float 25s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(30px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            color: var(--primary-blue);
+            margin-bottom: 1.5rem;
+            animation: slideInUp 0.8s ease 0.2s backwards;
+        }
+
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, var(--signal-green), var(--primary-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            animation: slideInUp 0.8s ease 0.4s backwards;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            animation: slideInUp 0.8s ease 0.6s backwards;
+        }
+
+        .btn-primary {
+            background: var(--signal-green);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(27, 174, 119, 0.2);
+        }
+
+        .btn-primary:hover {
+            background: #168a61;
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(27, 174, 119, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary-blue);
+            padding: 1rem 2.5rem;
+            border: 2px solid var(--primary-blue);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-blue);
+            color: white;
+            transform: translateY(-4px);
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ========== SERVICES SECTION ========== */
+        .services {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, #fff 0%, rgba(27, 174, 119, 0.03) 100%);
+            margin: 4rem 0;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.8rem;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .services-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border-top: 4px solid var(--signal-green);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, rgba(27, 174, 119, 0.1), transparent);
+            border-radius: 50%;
+            transform: translate(30%, -30%);
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 50px rgba(0, 59, 115, 0.12);
+            border-top-color: var(--primary-blue);
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .service-card h3 {
+            font-size: 1.4rem;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .service-card p {
+            color: #666;
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        /* ========== WHY CHOOSE US ========== */
+        .why-us {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .why-us-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .why-us-content h2 {
+            font-size: 2.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 2rem;
+            font-weight: 800;
+        }
+
+        .why-us-list {
+            list-style: none;
+        }
+
+        .why-us-list li {
+            padding: 1.2rem 0;
+            padding-left: 3rem;
+            position: relative;
+            color: #555;
+            line-height: 1.6;
+            font-size: 1rem;
+            border-bottom: 1px solid var(--tech-gray);
+        }
+
+        .why-us-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            font-size: 1.5rem;
+            color: var(--signal-green);
+            font-weight: bold;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat {
+            background: linear-gradient(135deg, var(--primary-blue), #002a52);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        /* ========== TECH STACK ========== */
+        .tech-stack {
+            padding: 6rem 2rem;
+            background: var(--earth-slate);
+            color: white;
+        }
+
+        .tech-stack .section-header {
+            color: white;
+        }
+
+        .tech-stack .section-header h2 {
+            color: white;
+        }
+
+        .tech-stack .section-header p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .tech-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+        }
+
+        .tech-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .tech-item:hover {
+            background: rgba(27, 174, 119, 0.2);
+            transform: translateY(-4px);
+            border-color: var(--signal-green);
+        }
+
+        .tech-item-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        /* ========== CTA SECTION ========== */
+        .cta-section {
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, var(--primary-blue), var(--earth-slate));
+            color: white;
+            text-align: center;
+            border-radius: 16px;
+            margin: 4rem 2rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .btn-white {
+            background: white;
+            color: var(--primary-blue);
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-white:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            background: var(--earth-slate);
+            color: white;
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            color: var(--signal-green);
+            font-weight: 700;
+        }
+
+        .footer-section a {
+            display: block;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            margin-bottom: 0.8rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--signal-green);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+            }
+
+            nav {
+                gap: 1.5rem;
+            }
+
+            nav a {
+                font-size: 0.85rem;
+            }
+
+            .section-header h2 {
+                font-size: 2rem;
+            }
+
+            .why-us-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .cta-section h2 {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* ========== SCROLL ANIMATIONS ========== */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .fade-in.visible {
+            animation: fadeInScroll 0.8s ease forwards;
+        }
+
+        @keyframes fadeInScroll {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo">PEC GeoSystems</a>
+            <nav>
+                <a href="#services">Services</a>
+                <a href="#why-us">Why Us</a>
+                <a href="#tech">Technology</a>
+                <a href="#contact">Contact</a>
+                <button class="cta-button">Get Started</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Transform Geospatial and <span class="highlight">Geological Data</span> Into Trusted Intelligence</h1>
+            <p class="hero-subtitle">Enterprise-scale GIS architecture, geological data science, cloud automation, and predictive analytics. Empower your organization with intelligent geospatial systems that drive measurable impact.</p>
+            <div class="hero-cta">
+                <button class="btn-primary">Schedule Consultation</button>
+                <button class="btn-secondary">Learn More</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <section class="services" id="services">
+        <div class="section-header">
+            <h2>Our Integrated Services</h2>
+            <p>We bridge geoscience, GIS engineering, cloud technology, and data analytics to solve your most complex challenges.</p>
+        </div>
+        <div class="services-grid">
+            <div class="service-card fade-in">
+                <div class="service-icon">🌍</div>
+                <h3>Geological Data Analysis</h3>
+                <p>Transform complex subsurface and geospatial datasets into reliable, decision-ready intelligence for mining, environmental, and structural applications.</p>
+            </div>
+            <div class="service-card fade-in">
+                <div class="service-icon">🏗️</div>
+                <h3>GIS Enterprise Architecture</h3>
+                <p>Design and deploy multi-environment ArcGIS Enterprise solutions with high availability, scalability, and security across on-premises and cloud infrastructure.</p>
+            </div>
+            <div class="service-card fade-in">
+                <div class="service-icon">⚙️</div>
+                <h3>ETL & Data Automation</h3>
+                <p>Implement complex ETL pipelines using SAFE FME and Python automation. Reduce manual work by 20-40% while ensuring data integrity and 99.9% uptime.</p>
+            </div>
+            <div class="service-card fade-in">
+                <div class="service-icon">📊</div>
+                <h3>Spatial Analytics</h3>
+                <p>Leverage predictive modeling and machine learning for infrastructure lifecycle management, asset maintenance planning, and intelligent risk assessment.</p>
+            </div>
+            <div class="service-card fade-in">
+                <div class="service-icon">💻</div>
+                <h3>Custom GIS Applications</h3>
+                <p>Build tailored geospatial applications using ArcGIS Experience Builder, JavaScript APIs, and field data collection systems that empower your teams.</p>
+            </div>
+            <div class="service-card fade-in">
+                <div class="service-icon">✓</div>
+                <h3>QA & Testing</h3>
+                <p>Ensure system reliability with end-to-end testing, database validation, and comprehensive QA across your GIS infrastructure and applications.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHY US SECTION -->
+    <section class="why-us" id="why-us">
+        <h2 style="text-align: center; font-size: 2.8rem; color: var(--primary-blue); margin-bottom: 4rem; font-weight: 800;">Why Choose PEC GeoSystems</h2>
+        <div class="why-us-grid">
+            <div class="why-us-content">
+                <ul class="why-us-list">
+                    <li><strong>Integrated Expertise:</strong> Geological science + GIS engineering + cloud infrastructure + data analytics in one team</li>
+                    <li><strong>6+ Years Proven Results:</strong> 99.9% uptime systems, optimized workflows, measurable ROI</li>
+                    <li><strong>Advanced Analytics:</strong> Master's in Data Analytics enables predictive modeling and machine learning</li>
+                    <li><strong>End-to-End Solutions:</strong> Architecture, deployment, automation, analytics, development, and QA</li>
+                    <li><strong>Partnership Focused:</strong> Transparent communication, accountability, genuine investment in your success</li>
+                </ul>
+            </div>
+            <div>
+                <div class="stats-grid">
+                    <div class="stat fade-in">
+                        <div class="stat-number">6+</div>
+                        <div class="stat-label">Years of Experience</div>
+                    </div>
+                    <div class="stat fade-in">
+                        <div class="stat-number">99.9%</div>
+                        <div class="stat-label">System Uptime</div>
+                    </div>
+                    <div class="stat fade-in">
+                        <div class="stat-number">40%</div>
+                        <div class="stat-label">Automation Gains</div>
+                    </div>
+                    <div class="stat fade-in">
+                        <div class="stat-number">20+</div>
+                        <div class="stat-label">Trained Staff</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TECH STACK SECTION -->
+    <section class="tech-stack" id="tech">
+        <div class="section-header">
+            <h2>Technology Stack</h2>
+            <p>We leverage industry-leading tools and platforms to deliver enterprise-grade solutions.</p>
+        </div>
+        <div class="tech-grid">
+            <div class="tech-item">
+                <div style="font-size: 2rem;">🗺️</div>
+                <div class="tech-item-name">ArcGIS Enterprise</div>
+            </div>
+            <div class="tech-item">
+                <div style="font-size: 2rem;">🐍</div>
+                <div class="tech-item-name">Python/ArcPy</div>
+            </div>
+            <div class="tech-item">
+                <div style="font-size: 2rem;">⚡</div>
+                <div class="tech-item-name">SAFE FME</div>
+            </div>
+            <div class="tech-item">
+                <div style="font-size: 2rem;">💾</div>
+                <div class="tech-item-name">SQL Server</div>
+            </div>
+            <div class="tech-item">
+                <div style="font-size: 2rem;">🐘</div>
+                <div class="tech-item-name">PostgreSQL</div>
+            </div>
+            <div class="tech-item">
+                <div style="font-size: 2rem;">☁️</div>
+                <div class="tech-item-name">Azure/AWS</div>
+            </div>
+            <div class="tech-item">
+                <div style="font-size: 2rem;">📱</div>
+                <div class="tech-item-name">Experience Builder</div>
+            </div>
+            <div class="tech-item">
+                <div style="font-size: 2rem;">📊</div>
+                <div class="tech-item-name">Analytics</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section class="cta-section" id="contact">
+        <h2>Ready to Transform Your GeoSystem?</h2>
+        <p>Let's discuss how our integrated geospatial and geological expertise can drive measurable results for your organization.</p>
+        <button class="btn-white">Schedule Your Consultation</button>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>PEC GeoSystems</h3>
+                <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6;">Engineering intelligence from earth & data. Enterprise geospatial and geological systems for the modern organization.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Services</h3>
+                <a href="#">Geological Analysis</a>
+                <a href="#">GIS Architecture</a>
+                <a href="#">Data Integration</a>
+                <a href="#">Analytics</a>
+                <a href="#">Custom Development</a>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p style="margin-bottom: 1rem;">
+                    📧 enyinnayaphilip@gmail.com<br>
+                    📞 (639) 314-7427<br>
+                    📍 Saskatoon, SK
+                </p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 PEC GeoSystems. All rights reserved. Engineering Intelligence from Earth & Data.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Animate stat numbers on scroll
+        let statsAnimated = false;
+        const statsSection = document.querySelector('.stats-grid');
+        const statObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !statsAnimated) {
+                    statsAnimated = true;
+                    document.querySelectorAll('.stat-number').forEach(stat => {
+                        const target = parseInt(stat.textContent);
+                        animateNumber(stat, target);
+                    });
+                    statObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        if (statsSection) {
+            statObserver.observe(statsSection);
+        }
+
+        function animateNumber(element, target) {
+            let current = 0;
+            const increment = target / 30;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = (element.textContent.includes('+') ? target + '+' : target);
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current) + (element.textContent.includes('+') ? '+' : '');
+                }
+            }, 30);
+        }
+
+        // Header scroll effect
+        let lastScrollTop = 0;
+        const header = document.querySelector('header');
+        window.addEventListener('scroll', () => {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > 100) {
+                header.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.12)';
+            } else {
+                header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.08)';
+            }
+        });
+    </script>
+</body>
+</html>
